@@ -36,6 +36,9 @@ export default (state = INITIAL_STATE, action) => {
                 return {...state, input: INITIAL_STATE.input}
             }
         }
+        case ACTIONS.ADDRESS_SET_INPUT: {
+            return {...state, input: action.payload}
+        }
         default:
         return state
     }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import {address} from '../actions';
 import { CardSection, Input, Button } from './common';
@@ -20,6 +20,11 @@ class AddressForm extends Component {
     onButtonPress(){
         // if our form is creating, we dont send an id, if we are editing, we send the id of the address to be edited
         this.props.finishForm(this.props.input, this.props.formType === 'create' ? null : this.props.id);
+    }
+
+    // dispatches the action to get geo location data
+    onGeoButtonPress(){
+        this.props.getGeoLocation();
     }
 
     render () {
@@ -70,6 +75,9 @@ class AddressForm extends Component {
                     <Button textStyle={{paddingBottom: 10}} onPress={() => this.onButtonPress()}>
                       {this.props.formType === 'create' ? 'Create' : 'Edit'}
                     </Button>
+                    <Button  textStyle={{paddingBottom: 10}} onPress={() => this.onGeoButtonPress()}>
+                        Get GeoLocation
+                    </Button>
                 </CardSection>
             </View>
         );
@@ -90,5 +98,6 @@ export default connect(mapStateToProps,
     { 
         inputChanged : address.inputChanged,
         finishForm: address.finishForm,
-        prepareForm: address.prepareForm
+        prepareForm: address.prepareForm,
+        getGeoLocation: address.getGeoLocation
     })(AddressForm);

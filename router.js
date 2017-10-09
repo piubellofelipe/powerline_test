@@ -3,6 +3,8 @@ import { Scene, Router, Actions } from 'react-native-router-flux';
 import AddressList from './components/addressList';
 import AdressForm from './components/addressForm';
 
+import {address} from './actions';
+
 const RouterComponent = () => {
     return (
         <Router>
