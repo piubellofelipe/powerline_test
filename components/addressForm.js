@@ -1,19 +1,26 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
-import { inputChanged } from '../actions';
-import { CardSection, Input } from './common';
+import {address} from '../actions';
+import { CardSection, Input, Button } from './common';
 
 class AddressForm extends Component {
+
+    // dispatches the action to create or to edit the address
+    onButtonPress(){
+        // if our form is creating, we dont send an id, if we are editing, we send the id of the address to be edited
+        this.props.finishForm(this.props.input, this.props.formType === 'create' ? '' : this.props.addressId);
+    }
+
     render () {
-        console.log(this.props);
+        // console.log(this.props);
         return (
             <View>
                 <CardSection>
                     <Input
                         label='streetName'
                         placeholder='Street Name'
-                        value={this.props.streetName}
+                        value={this.props.input.streetName}
                         onChangeText={value => this.props.inputChanged({ id: 'streetName', value: value })}
                     />
                 </CardSection>
@@ -21,7 +28,7 @@ class AddressForm extends Component {
                     <Input
                         label='Ward'
                         placeholder='Ward'
-                        value={this.props.ward}
+                        value={this.props.input.ward}
                         onChangeText={value => this.props.inputChanged({ id: 'ward', value: value })}
                     />
                 </CardSection>
@@ -29,7 +36,7 @@ class AddressForm extends Component {
                     <Input
                         label='district'
                         placeholder='District'
-                        value={this.props.district}
+                        value={this.props.input.district}
                         onChangeText={value => this.props.inputChanged({ id: 'district', value: value })}
                     />
                 </CardSection>
@@ -37,7 +44,7 @@ class AddressForm extends Component {
                     <Input
                         label='City'
                         placeholder='City'
-                        value={this.props.city}
+                        value={this.props.input.city}
                         onChangeText={value => this.props.inputChanged({ id: 'city', value: value })}
                     />
                 </CardSection>
@@ -45,9 +52,14 @@ class AddressForm extends Component {
                     <Input
                         label='Country'
                         placeholder='Country'
-                        value={this.props.country}
+                        value={this.props.input.country}
                         onChangeText={value => this.props.inputChanged({ id: 'country', value: value })}
                     />
+                </CardSection>
+                <CardSection>
+                    <Button textStyle={{paddingBottom: 10}} onPress={() => this.onButtonPress()}>
+                      Create
+                    </Button>
                 </CardSection>
             </View>
         );
@@ -61,11 +73,7 @@ const styles = {
 };
 
 const mapStateToProps = (state) => ({
-    name: state.address.streetName,
-    ward: state.address.ward,
-    district: state.address.district,
-    city: state.address.city,
-    country: state.address.country,
+    input : state.address.input
 });
 
-export default connect(mapStateToProps, { inputChanged })(AddressForm);
+export default connect(mapStateToProps, { inputChanged : address.inputChanged, finishForm: address.finishForm })(AddressForm);

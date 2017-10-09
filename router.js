@@ -15,7 +15,7 @@ const RouterComponent = () => {
                     onRight={() => Actions.addressForm({formType: 'create'})}
                     initial
                 />
-                <Scene key='addressForm' title='Create Address' component={AdressForm} />
+                <Scene key='addressForm' title='Address Form' component={AdressForm} />
             </Scene>
         </Router>
     );
