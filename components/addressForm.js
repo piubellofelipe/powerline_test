@@ -16,21 +16,22 @@ class AddressForm extends Component {
     }
 
 
-    // dispatches the action to create or to edit the address
     onButtonPress(){
-        // if our form is creating, we dont send an id, if we are editing, we send the id of the address to be edited
         this.props.finishForm(this.props.input, this.props.formType === 'create' ? null : this.props.id);
     }
 
-    // dispatches the action to get geo location data
     onGeoButtonPress(){
         this.props.getGeoLocation();
     }
 
     render () {
-        // console.log(this.props);
         return (
             <View>
+                <Text style={styles.error}>
+                    {
+                        this.props.error
+                    }
+                </Text>
                 <CardSection>
                     <Input
                         label='streetName'
@@ -87,11 +88,15 @@ const styles = {
     pickerTextStyle: {
         fontSize: 18,
         paddingLeft: 20
+    },
+    error: {
+        color: '#F00'
     }
 };
 
 const mapStateToProps = (state) => ({
-    input : state.address.input
+    input : state.address.input,
+    error: state.address.error
 });
 
 export default connect(mapStateToProps, 

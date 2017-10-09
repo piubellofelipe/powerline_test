@@ -31,6 +31,12 @@ export const prepareForm = (id) => {
 
 export const finishForm = (input, id) => {
     return (dispatch) => {
+        let err = validateForm(input);
+        if (err){
+            dispatch({type: ACTIONS.ADDRESS_SET_ERROR, payload: err})
+            return;
+        }
+
         if (id){
             firebase.database().ref(`/addresses/${id}`).set(input);
         } else {
@@ -56,5 +62,19 @@ export const getGeoLocation = () => {
             
         })
     }
+}
+
+const validateForm = (input) => {
+    if (!input.streetName){
+        return 'Missing street name';
+    }
+    if (!city){
+        if (!input.ward){
+            return 'Missing ward when not providing an city'
+        }
+        if (!input.district){
+            return 'Missing district when not providing an city'
+        }
+    } 
 }
 

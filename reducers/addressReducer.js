@@ -22,22 +22,23 @@ export default (state = INITIAL_STATE, action) => {
         case ACTIONS.ADDRESS_INPUT_CHANGED: {
             let prevState = _.cloneDeep(state);
             prevState.input[action.payload.id] = action.payload.value;
-            // console.log(prevState, prevState.input[action.payload.id]);
-            return { ...prevState };
+            return { ...prevState, error: null };
         }
         case ACTIONS.ADDRESS_GET_OBJECTS: {
-            return {...state, list: action.payload}
+            return {...state, list: action.payload, error: null}
         }
         case ACTIONS.ADDRESS_PREAPARE_FORM: {
             if (action.payload){
-                return {...state, input: state.list[action.payload]}
+                return {...state, input: state.list[action.payload], error: null}
             } else {
-                console.log(action.payload, INITIAL_STATE)
-                return {...state, input: INITIAL_STATE.input}
+                return {...state, input: INITIAL_STATE.input, error: null}
             }
         }
         case ACTIONS.ADDRESS_SET_INPUT: {
-            return {...state, input: action.payload}
+            return {...state, input: action.payload, error: null}
+        }
+        case ACTIONS.ADDRESS_SET_ERROR: {
+            return {...state, error: action.payload}
         }
         default:
         return state
