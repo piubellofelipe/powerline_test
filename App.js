@@ -22,7 +22,6 @@ const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
 
 export default class App extends Component {
   componentWillMount(){
-    // firebase basic setup
     var config = {
         apiKey: "AIzaSyAPsp3M6n10Hj8zgAtUOk6sdI3beahQxGY",
         authDomain: "addresses-a1040.firebaseapp.com",

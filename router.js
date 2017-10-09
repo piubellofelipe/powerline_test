@@ -10,7 +10,7 @@ const RouterComponent = () => {
                 <Scene
                     key='addressList'
                     component={AddressList}
-                    title='People'
+                    title='Addresses'
                     rightTitle='Add'
                     onRight={() => Actions.addressForm({formType: 'create'})}
                     initial

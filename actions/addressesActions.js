@@ -1,25 +1,16 @@
 import {
     ACTIONS
 } from '../actions/types'
+import { Actions } from 'react-native-router-flux';
 
 import firebase from 'firebase';
 
 // fetch addresses from our firebase
 export const getObjects = () => {
    return (dispatch) => {
-        // console.log('hey yal');
         firebase.database().ref(`/addresses`).once('value', (res) => {
-            // console.log('ressss', res);
             dispatch({type: ACTIONS.ADDRESS_GET_OBJECTS, payload: res.val()})
-            // console.log('hello', res.val())
         });
-   } 
-}
-
-export const createObject = (input) => {
-   return (dispatch) => {
-        firebase.database().ref(`/addresses`).push(input);
-        Actions.pop({type: 'reset'});
    } 
 }
 
@@ -29,21 +20,21 @@ export const inputChanged = ({id, value}) => {
     }
 }
 
-export const prepareForm = () => {
-
+export const prepareForm = (id) => {
+    return (dispatch) => {
+        dispatch({type: ACTIONS.ADDRESS_PREAPARE_FORM, payload: id})
+    }
 }
 
 export const finishForm = (input, id) => {
     return (dispatch) => {
         if (id){
-            // console.log('editing...');
+            firebase.database().ref(`/addresses/${id}`).set(input);
         } else {
-            console.log('creating....');
             firebase.database().ref('/addresses').push(input);
-
+            getObjects();
         }
-        console.log(input);
-        dispatch({type: ACTIONS.ADDRESS_ON_SAVE_FORM, payload: {}})
+        Actions.pop({type: 'reset'});
     }
 }
 

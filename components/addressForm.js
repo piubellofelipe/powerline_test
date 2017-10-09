@@ -6,10 +6,20 @@ import { CardSection, Input, Button } from './common';
 
 class AddressForm extends Component {
 
+    componentDidMount(){
+        console.log(this.props);
+        if (this.props.formType === 'edit') {
+            this.props.prepareForm(this.props.id);
+        } else {
+            this.props.prepareForm(null);
+        }
+    }
+
+
     // dispatches the action to create or to edit the address
     onButtonPress(){
         // if our form is creating, we dont send an id, if we are editing, we send the id of the address to be edited
-        this.props.finishForm(this.props.input, this.props.formType === 'create' ? '' : this.props.addressId);
+        this.props.finishForm(this.props.input, this.props.formType === 'create' ? null : this.props.id);
     }
 
     render () {
@@ -58,7 +68,7 @@ class AddressForm extends Component {
                 </CardSection>
                 <CardSection>
                     <Button textStyle={{paddingBottom: 10}} onPress={() => this.onButtonPress()}>
-                      Create
+                      {this.props.formType === 'create' ? 'Create' : 'Edit'}
                     </Button>
                 </CardSection>
             </View>
@@ -76,4 +86,9 @@ const mapStateToProps = (state) => ({
     input : state.address.input
 });
 
-export default connect(mapStateToProps, { inputChanged : address.inputChanged, finishForm: address.finishForm })(AddressForm);
+export default connect(mapStateToProps, 
+    { 
+        inputChanged : address.inputChanged,
+        finishForm: address.finishForm,
+        prepareForm: address.prepareForm
+    })(AddressForm);
