@@ -10,7 +10,7 @@ const GEO_KEY = 'AIzaSyBtm17doFbHlcUxy9lHQTS7PN0Zdhm65_k';
 // fetch addresses from our firebase
 export const getObjects = () => {
    return (dispatch) => {
-        firebase.database().ref(`/addresses`).once('value', (res) => {
+        firebase.database().ref(`/addresses`).on('value', (res) => {
             dispatch({type: ACTIONS.ADDRESS_GET_OBJECTS, payload: res.val()})
         });
    } 
@@ -41,7 +41,7 @@ export const finishForm = (input, id) => {
             firebase.database().ref(`/addresses/${id}`).set(input);
         } else {
             firebase.database().ref('/addresses').push(input);
-            getObjects();
+            // getObjects();
         }
         Actions.pop({type: 'reset'});
     }
@@ -68,7 +68,7 @@ const validateForm = (input) => {
     if (!input.streetName){
         return 'Missing street name';
     }
-    if (!city){
+    if (!input.city){
         if (!input.ward){
             return 'Missing ward when not providing an city'
         }

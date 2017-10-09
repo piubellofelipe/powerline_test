@@ -4,11 +4,13 @@ import { Text, View } from 'react-native';
 import {Button} from './Button';
 // Make a component
 const ListItem = (props) => {
-    const { textStyle, viewStyle, dividerStyle, buttonContainer } = styles;
+    const { textStyle, viewStyle, dividerStyle, buttonContainer, textContainer } = styles;
     return (
         <View>
             <View style={viewStyle}>
-                <Text style={textStyle}>{props.text}</Text>
+                <View style={textContainer}>
+                    <Text style={textStyle}>{props.text}</Text>
+                </View>
                 <View style={buttonContainer}>
                     <Button textStyle={{fontSize: 12, paddingTop: 12}} buttonStyle={{}} onPress={() => props.onRightIconClick()}>
                         {props.rightIconText}
@@ -43,7 +45,10 @@ const styles = {
         width: '100%'
     },
     textStyle: {
-        fontSize: 20
+        fontSize: 20,
+    },
+    textContainer: {
+        maxWidth: '80%'
     },
     buttonContainer: {
         width: 55,
